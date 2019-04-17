@@ -1,12 +1,57 @@
-
 * {
     margin: 0;
     padding: 0;
     font-family: 'DejaVu Sans'
 }
+
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+#wrapper {
+    height: calc(100% - 10px);
+}
+
 #topBar {
     min-height: 40px;
     background-color: #ddd;
     padding: 5px 10px;
+    box-shadow: 2px 3px 7px rgba(0,0,0,.3);
+    z-index: 10;
+    position: relative;
+    border-top: 2px solid #bbb;
 }
 
+#WrapContent {
+    background-color: #f5f5f5;
+    min-width: 100%;
+    height: calc(100% - 10px);
+}
+
+
+#leftDrawer{
+    min-width: 250px;
+    max-width: 250px;
+    height: calc(100% - 50px);
+    background-color: #c5c5c5;
+    box-shadow: 2px 3px 7px rgba(0,0,0,.3);
+    position: fixed;
+    left: 0px;
+    top: 50px;
+    z-index: 5;
+    display: inline;
+
+    
+}
+
+#content {
+    /* min-height: calc(100vh - 54px); */
+    background-color: #b0b0b0;
+    width: 100%;
+    height: calc(100% - 50px);
+    position: absolute;
+    left: 250px;
+    overflow: auto;
+}

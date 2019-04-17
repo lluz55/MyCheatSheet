@@ -59,7 +59,8 @@ func server() {
 
 func main() {
 
-	fb := MustAsset("public/index.html")
+	// fb := MustAsset("public/index.html")
+	fb, _ := ioutil.ReadFile("public/index.html")
 
 	mainPage = template.Must(template.New("app").Parse(string(fb)))
 
@@ -69,7 +70,7 @@ func main() {
 	}
 
 	w := webview.New(webview.Settings{
-		Title: "MyCheatSheet",
+		Title:     "MyCheatSheet",
 		URL:       "http://192.168.0.113:8080/",
 		Resizable: true,
 		Width:     1367,
