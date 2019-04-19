@@ -6,18 +6,40 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>MyCheatSheet</title>
     <link rel="stylesheet" type="text/css" href="/static/app.css">
+    <script src="/static/axios.min.js"></script>
 </head>
 <body>
     <div id="wrapper"> 
-        <div id="topBar"> <!-- Top bar-->
-            MyCheatSheet
+        <div id="topBar"> 
+        </div>
+        <div id="topBarTop"><!-- Top bar-->
+            <div style="font-size: 1.4em">MyCheatSheet</div>
         </div>
         <div id="WrapContent"><!-- General Content-->
             <div id="leftDrawer"> <!-- Left Drawer-->
-                div.
+                <!-- <div class="cheatName active">Git</div> -->
+                {{range $i, $e := .Cheats}}
+                    <div id="cheatname{{$i}}" class="cheatName {{if .Active}} active {{end}}">
+                        {{.Name}}
+                    </div>
+                    <script>
+                        var cheat = document.getElementById("cheatname{{$i}}")
+                        cheat.addEventListener("click", function() {
+                            location.href = "/activate/?id={{$i}}"
+                        })
+                    </script>
+                {{end}}
+
+                
             </div>
             <div id="content"> <!-- Content -->
-
+                {{range $i, $e := .Cheats}}
+                    {{if .Active}}
+                        {{range .Notes}}
+                            {{.Name}} - {{.Description}}
+                        {{end}}
+                    {{end}}
+                {{end}}
             </div>
         </div> 
     </div>
