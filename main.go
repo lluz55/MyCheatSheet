@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -68,6 +69,12 @@ func server() {
 	router.HandleFunc("/update", update)
 	router.HandleFunc("/activate/", activateCheat)
 	router.HandleFunc("/", index)
+
+	port := os.Getenv("port")
+
+	if port == "" {
+		port = "8080"
+	}
 
 	log.Println("Listen on port 8080...")
 	http.ListenAndServe(":8080", router)
