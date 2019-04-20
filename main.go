@@ -11,7 +11,6 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
-	"github.com/zserge/webview"
 )
 
 var (
@@ -133,21 +132,21 @@ func main() {
 		},
 	}
 
-	w := webview.New(webview.Settings{
-		Title:     "MyCheatSheet",
-		URL:       "http://192.168.0.113:8080/",
-		Resizable: true,
-		Width:     1367,
-		Height:    766,
-	})
+	// w := webview.New(webview.Settings{
+	// 	Title:     "MyCheatSheet",
+	// 	URL:       "http://192.168.0.113:8080/",
+	// 	Resizable: true,
+	// 	Width:     1367,
+	// 	Height:    766,
+	// })
 
 	go server()
 
-	time.Sleep(time.Second)
+	// time.Sleep(time.Second)
 
-	w.Run()
-	os.Exit(0)
-	// d := make(chan bool)
-	// <-d
+	// w.Run()
+	// os.Exit(0)
+	d := make(chan bool)
+	<-d
 
 }
