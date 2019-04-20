@@ -27,7 +27,7 @@
                         var cheat = document.getElementById("cheatname{{$i}}")
                         cheat.addEventListener("click", function() {
                             // location.href = "/activate/?id={{$i}}"
-                            axios.get("http://localhost:8080/showsheets/?id={{$i}}").then(function (resp) {
+                            axios.get("https://mycheat.herokuapp.com/showsheets/?id={{$i}}").then(function (resp) {
                                 var content = document.getElementById("content")
                                 var cheats = document.getElementsByClassName("cheatName")
                                 for(var i=0;i<cheats.length;i++){
