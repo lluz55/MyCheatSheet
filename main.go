@@ -11,16 +11,32 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
+	"github.com/zserge/webview"
 )
 
 var (
-	mainPage *template.Template
-	app      App
+	mainPage  *template.Template
+	sheetPage *template.Template
+	app       App
 )
 
 func update(w http.ResponseWriter, r *http.Request) {
 	app.Time = time.Now().UnixNano()
 	mainPage.Execute(w, app)
+}
+
+func showsheets(w http.ResponseWriter, r *http.Request) {
+	keys, ok := r.URL.Query()["id"]
+	cheatActive := 0
+	if ok {
+		n, err := strconv.Atoi(keys[0])
+		if err != nil {
+			panic(err)
+		}
+		cheatActive = n
+	}
+
+	sheetPage.Execute(w, app.Cheats[cheatActive])
 }
 
 func activateCheat(w http.ResponseWriter, r *http.Request) {
@@ -68,6 +84,7 @@ func server() {
 	router.PathPrefix("/static/").HandlerFunc(staticHandler)
 	router.HandleFunc("/update", update)
 	router.HandleFunc("/activate/", activateCheat)
+	router.HandleFunc("/showsheets/", showsheets)
 	router.HandleFunc("/", index)
 
 	port := os.Getenv("PORT")
@@ -84,8 +101,10 @@ func main() {
 
 	// fb := MustAsset("public/index.html")
 	fb, _ := ioutil.ReadFile("public/index.html")
+	sh, _ := ioutil.ReadFile("public/sheets.html")
 
 	mainPage = template.Must(template.New("app").Parse(string(fb)))
+	sheetPage = template.Must(template.New("sheets").Parse(string(sh)))
 
 	app = App{
 		Version: "0.0.1",
@@ -114,21 +133,21 @@ func main() {
 		},
 	}
 
-	// w := webview.New(webview.Settings{
-	// 	Title:     "MyCheatSheet",
-	// 	URL:       "http://192.168.0.113:8080/",
-	// 	Resizable: true,
-	// 	Width:     1367,
-	// 	Height:    766,
-	// })
+	w := webview.New(webview.Settings{
+		Title:     "MyCheatSheet",
+		URL:       "http://192.168.0.113:8080/",
+		Resizable: true,
+		Width:     1367,
+		Height:    766,
+	})
 
 	go server()
 
 	time.Sleep(time.Second)
 
-	// w.Run()
-	// os.Exit(0)
-	d := make(chan bool)
-	<-d
+	w.Run()
+	os.Exit(0)
+	// d := make(chan bool)
+	// <-d
 
 }

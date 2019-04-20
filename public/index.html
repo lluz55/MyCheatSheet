@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>MyCheatSheet</title>
     <link rel="stylesheet" type="text/css" href="/static/app.css">
+    <script src="/static/polyfill.min.js"></script>
     <script src="/static/axios.min.js"></script>
 </head>
 <body>
@@ -25,7 +26,16 @@
                     <script>
                         var cheat = document.getElementById("cheatname{{$i}}")
                         cheat.addEventListener("click", function() {
-                            location.href = "/activate/?id={{$i}}"
+                            // location.href = "/activate/?id={{$i}}"
+                            axios.get("http://localhost:8080/showsheets/?id={{$i}}").then(function (resp) {
+                                var content = document.getElementById("content")
+                                var cheats = document.getElementsByClassName("cheatName")
+                                for(var i=0;i<cheats.length;i++){
+                                    cheats[i].classList.remove("active")
+                                }
+                                cheats[{{$i}}].classList.add("active")
+                                content.innerHTML = resp.data
+                            })
                         })
                     </script>
                 {{end}}
@@ -33,16 +43,17 @@
                 
             </div>
             <div id="content"> <!-- Content -->
-                {{range $i, $e := .Cheats}}
+                <!-- {{range $i, $e := .Cheats}}
                     {{if .Active}}
                         {{range .Notes}}
                             {{.Name}} - {{.Description}}
                         {{end}}
                     {{end}}
-                {{end}}
+                {{end}} -->
             </div>
         </div> 
     </div>
 
 </body>
 </html>
+
