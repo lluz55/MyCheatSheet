@@ -77,7 +77,7 @@ func server() {
 	}
 
 	log.Println("Listen on port 8080...")
-	http.ListenAndServe(port, router)
+	http.ListenAndServe(":"+port, router)
 }
 
 func main() {
